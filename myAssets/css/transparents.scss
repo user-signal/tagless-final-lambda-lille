@@ -1,0 +1,86 @@
+@import "../../css/theme/source/transparents";
+
+body {
+  background: #FFFFFF;
+}
+
+.reveal h1 {
+  color: $orange;
+}
+
+.reveal h2 {
+  color: $yellow;
+}
+
+.reveal h3 {
+  color: $green;
+}
+
+.reveal .orange {
+  color: $orange;
+}
+
+.reveal .red {
+  color: $red;
+}
+
+.reveal .blue {
+  color: $blue;
+}
+
+.reveal .green {
+  color: $green;
+}
+
+.reveal .yellow {
+  color: $yellow;
+}
+
+.reveal .magenta {
+  color: $magenta;
+}
+
+.reveal .slides section img {
+  margin: 15px 0;
+  border: none;
+  box-shadow: 0 0 0;
+}
+
+.reveal .slides section img[src$=".svg"] {
+  margin: 15px 0;
+  border: none;
+  box-shadow: 0 0 0;
+}
+
+.reveal .slides section blockquote {
+  width: 30em;
+  background: rgba(255, 255, 255, 0.00);
+  border: 0 solid;
+  box-shadow: 0 0 0;
+  text-align: right;
+  font-style: italic;
+  font-size: larger;
+  padding: 0 0;
+}
+
+.reveal .slides section ul {
+  margin-bottom: 100%;
+  margin-left: -1ex
+}
+
+.reveal .slides section ul li {
+  list-style-type: none;
+}
+
+.reveal .slides sub {
+  vertical-align: sub;
+  font-size: smaller;
+}
+
+.reveal pre {
+  width: 75%;
+  font-size: 0.40em;
+  border: none;
+  color: #dcdcdc;
+  background: #002b36;
+}
