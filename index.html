@@ -44,11 +44,23 @@
         </section>
 
         <section>
-          <img src="myAssets/images/Wadler.png" alt="How to make ad-hoc polymorphism less ad hoc"></img>
+          <h2>Promesse de vente</h2>
         </section>
 
         <section>
-          <img src="myAssets/images/Augustson.png" alt="Implementing Haskell Overloading"></img>
+          <h2>D'abord <span class="green">Final</span>…</h2>
+        </section>
+
+        <section>
+          <h2>Paramétrisons</h2>
+        </section>
+
+        <section>
+          <h2>Détour : les <span class="green">TypeClasses</span></h2>
+        </section>
+
+        <section>
+          <img src="myAssets/images/Wadler.png" alt="How to make ad-hoc polymorphism less ad hoc"></img>
         </section>
 
         <section>
@@ -56,44 +68,34 @@
         </section>
 
         <section>
+          <h2>« Poor Man's Type Classes »</span></h2>
+          <img src="myAssets/images/PoorMans.png" alt="Poor Man's Type Classes"></img>
+        </section>
+
+        <section>
+          <h2>… et puis <span class="green">Tagless</span></h2>
+        </section>
+
+        <section>
+          <h2>Oui mais <span class="green">en Pratique</span></h2>
+        </section>
+
+        <section>
           <h2>Ressources</h2>
           <ul style="margin-top: 3em">
               <li class="fragment">Finally Tagless, Partially Evaluated<a href="http://okmij.org/ftp/tagless-final/JFP.pdf"> [PDF]</a></li>
               <li class="fragment">Typed Tagless Final Interpreters<a href="http://okmij.org/ftp/tagless-final/course/lecture.pdf"> [PDF]</a></li>
-              <li class="fragment">How to make ad-hoc polymorphism less ad hoc<a href="https://people.csail.mit.edu/dnj/teaching/6898/papers/wadler88.pdf"> [PDF]</a></li>
+              <li class="fragment" style="margin-top: 0.4em">How to make ad-hoc polymorphism less ad hoc<a href="https://people.csail.mit.edu/dnj/teaching/6898/papers/wadler88.pdf"> [PDF]</a></li>
               <li class="fragment">Implementing Haskell Overloading<a href="https://dl.acm.org/doi/pdf/10.1145/165180.165191"> [PDF]</a></li>
+              <li class="fragment">Implementing, and Understanding Type Classes<a href="http://okmij.org/ftp/Computation/typeclass.html"> [BLOG]</a></li>
               <li class="fragment">Type Classes as Objects and Implicits<a href="https://ropas.snu.ac.kr/~bruno/papers/TypeClasses.pdf"> [PDF]</a></li>
+              <li class="fragment" style="margin-top: 0.4em">IO monad: which, why and how<a href="https://kubuszok.com/2019/io-monad-which-why-and-how/#io-monads-in-scala"> [BLOG]</a></li>
+              <li class="fragment" style="margin-top: 0.4em">fs2-mqtt<a href="https://github.com/user-signal/fs2-mqtt"> [CODE]</a></li>
           </ul>
       </section>
 
         <!-- <section>
           <pre style="font-size: 1.1ex; margin-top: 1.8em; margin-bottom: 100%"><code class="java" style="max-height: 800px;">
-package net.sigusr
-
-trait ExpSym[R] {
-  def lit(i: Int): R
-  def neg(r: R): R
-  def add(r1: R, r2: R): R
-}
-
-object ExpSymSamples {
-
-  /*
-      tf1 = add (lit 8) (neg (add (lit 1) (lit 2)))
-   */
-  def tf1[R: ExpSym]: R = {
-    val e = implicitly[ExpSym[R]]
-    e.add(e.lit(8), e.neg(e.add(e.lit(1), e.lit(2))))
-  }
-
-  /*
-      tf3 = (add tf1 (neg (neg tf1)))
-   */
-  def tf3[R: ExpSym]: R = {
-    val e = implicitly[ExpSym[R]]
-    e.add(tf1, e.neg(e.neg(tf1)))
-  }
-}
           </code></pre>
         </section> -->
 
