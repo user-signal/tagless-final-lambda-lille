@@ -12,4 +12,5 @@ node_modules/
 css/reveal.min.css
 js/reveal.min.js
 tagless-final-λ-lille.code-workspace
-
+**/target/
+.bloop
