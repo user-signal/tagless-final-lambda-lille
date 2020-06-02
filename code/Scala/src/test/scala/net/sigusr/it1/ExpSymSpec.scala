@@ -1,4 +1,4 @@
-package net.sigusr
+package net.sigusr.it1
 
 class ExpSymSpec extends org.specs2.Specification {
 
@@ -16,30 +16,30 @@ An ExpSym expression when interpreted with the 'PushNeg' composed with the 'Flat
 """
 
   private def e1 = {
-    import ExpSymInt.expSymInt
+    import net.sigusr.it1.ExpSymInt.expSymInt
     ExpSymSamples.tf1 must_== 5
   }
 
   private def e2 = {
-    import ExpSymString.expSymString
+    import net.sigusr.it1.ExpSymString.expSymString
     ExpSymSamples.tf1 must_== "(8 + (-(1 + 2)))"
   }
 
   private def e3 = {
-    import ExpSymTree.expSymTree
+    import net.sigusr.it1.ExpSymTree.expSymTree
     ExpSymSamples.tf1 must_== ExpSymSamples.tf1_tree
   }
 
   private def e4 = {
-    import ExpSymString.expSymString
-    import ExpSymPushNeg.expSymPushNeg
+    import net.sigusr.it1.ExpSymPushNeg.expSymPushNeg
+    import net.sigusr.it1.ExpSymString.expSymString
     ExpSymSamples.tf1(expSymPushNeg)(Pos) must_== "(8 + ((-1) + (-2)))"
   }
 
   private def e5 = {
-    import ExpSymString.expSymString
-    import ExpSymPushNeg.expSymPushNeg
-    import ExpSymFlata.expSymFlata
+    import net.sigusr.it1.ExpSymFlata.expSymFlata
+    import net.sigusr.it1.ExpSymPushNeg.expSymPushNeg
+    import net.sigusr.it1.ExpSymString.expSymString
     ExpSymSamples.tf3(expSymPushNeg(expSymFlata(expSymString)))(Pos)(NonLca) must_== "(8 + ((-1) + ((-2) + (8 + ((-1) + (-2))))))"
   }
 }

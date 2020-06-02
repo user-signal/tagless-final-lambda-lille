@@ -1,6 +1,4 @@
-package net.sigusr
-
-import net.sigusr.MulSymPushNeg.mulSymPushNeg
+package net.sigusr.it1
 
 class MulExpSpec extends org.specs2.Specification {
 
@@ -16,34 +14,34 @@ A MulSym expression  when interpreted with the 'PushNeg' and then the 'String' e
 """
 
   private def e1 = {
-    import ExpSymInt.expSymInt
-    import MulSymInt.mulSymInt
+    import net.sigusr.it1.ExpSymInt.expSymInt
+    import net.sigusr.it1.MulSymInt.mulSymInt
     MulSymSamples.tfm1 must_== 5
   }
 
   private def e2 = {
-    import ExpSymInt.expSymInt
-    import MulSymInt.mulSymInt
+    import net.sigusr.it1.ExpSymInt.expSymInt
+    import net.sigusr.it1.MulSymInt.mulSymInt
     MulSymSamples.tfm2 must_== 35
   }
 
   private def e3 = {
-    import ExpSymString.expSymString
-    import MulSymString.mulSymString
+    import net.sigusr.it1.ExpSymString.expSymString
+    import net.sigusr.it1.MulSymString.mulSymString
     MulSymSamples.tfm1 must_== "(7 + (-(2 * 1)))"
   }
 
   private def e4 = {
-    import ExpSymString.expSymString
-    import MulSymString.mulSymString
+    import net.sigusr.it1.ExpSymString.expSymString
+    import net.sigusr.it1.MulSymString.mulSymString
     MulSymSamples.tfm2 must_== "(7 * (8 + (-(1 + 2))))"
   }
 
   private def e5 = {
-    import ExpSymString.expSymString
-    import ExpSymPushNeg.expSymPushNeg
-    import MulSymString.mulSymString
-    import MulSymPushNeg.mulSymPushNeg
+    import net.sigusr.it1.ExpSymPushNeg.expSymPushNeg
+    import net.sigusr.it1.ExpSymString.expSymString
+    import net.sigusr.it1.MulSymPushNeg.mulSymPushNeg
+    import net.sigusr.it1.MulSymString.mulSymString
     MulSymSamples.tfm1(expSymPushNeg, mulSymPushNeg)(Pos) must_== "(7 + (2 * (-1)))"
   }
 }

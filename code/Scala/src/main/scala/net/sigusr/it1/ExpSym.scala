@@ -1,4 +1,4 @@
-package net.sigusr
+package net.sigusr.it1
 
 /*
 

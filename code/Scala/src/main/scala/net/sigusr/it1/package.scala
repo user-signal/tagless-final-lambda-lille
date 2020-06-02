@@ -1,6 +1,6 @@
-package net
+package net.sigusr
 
-package object sigusr {
+package object it1 {
 
   /*
 
