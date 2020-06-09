@@ -4,7 +4,7 @@ class BoolExpSpec extends org.specs2.Specification {
 
   def is = s2"""
 BoolSym expressions when interpreted with the 'Int' evaluator
-   add(lit(7), neg(mul(lit(1), lit(2)))) must be 5 $e1
+   add(lit(7), neg(mul(lit(1), num(2)))) must be 5 $e1
 """
 
   private def e1 = {

@@ -4,10 +4,10 @@ class MulExpSpec extends org.specs2.Specification {
 
   def is = s2"""
 MulSym expressions when interpreted with the 'Int' evaluator
-   add(lit(7), neg(mul(lit(1), lit(2)))) must be 5 $e1
+   add(lit(7), neg(mul(lit(1), num(2)))) must be 5 $e1
    mul(lit(7), ExpSymSamples.tf1) must be 35 $e2
 MulSym expressions when interpreted with the 'String' evaluator
-   add(lit(7), neg(mul(lit(1), lit(2)))) must be "(7 + (-(2 * 1)))" $e3
+   add(lit(7), neg(mul(lit(1), num(2)))) must be "(7 + (-(2 * 1)))" $e3
    mul(lit(7), ExpSymSamples.tf1) must be "(7 * (8 + (-(1 + 2))))" $e4
 """
 

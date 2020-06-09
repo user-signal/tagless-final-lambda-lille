@@ -61,19 +61,193 @@
         </section>
 
         <section>
-          <h2>Tagged Initial</h2>
+          <h2>Problématique</h2>
+          <div style="margin-bottom: 100%; margin-top: 3em; display: grid; grid-template-columns: auto auto; grid-template-rows: auto">
+            <div style="grid-column: 1 / span 3; grid-row: 1">
+              <div style="display: flex; justify-content: space-evenly">
+                <div style="padding: 1.5vw">
+                  $\frac{n\, \mathrm{est \, un \, entier}}{n\, :\, \mathbb{Z}}$
+                </div>
+                <div style="padding: 1.5vw">
+                  $\frac{b\, \mathrm{est \, un \, booleen}}{b\, :\, \mathbb{B}}$
+                </div>
+              </div>
+            </div>
+            <div style="padding: 1.5vw; grid-column: 1; grid-row: 2">
+              $\frac{e\, :\, \mathbb{Z}}{- e\, :\, \mathbb{Z}}$
+            </div>
+            <div style="padding: 1.5vw; grid-column: 2; grid-row: 2">
+              $\frac{e_1\, :\, \mathbb{Z} \;\;\; e_2\, :\, \mathbb{Z}}{e_1\, + \,e_2 \, :\, \mathbb{Z}}$
+            </div>
+            <div style="padding: 1.5vw; grid-column: 3; grid-row: 2">
+              $\frac{e_1\, :\, \mathbb{Z} \;\;\; e_2\, :\, \mathbb{Z}}{e_1\, \times \,e_2 \, :\, \mathbb{Z}}$
+            </div>
+            <div style="padding: 1.5vw; grid-column: 1; grid-row: 3">
+              $\frac{e_1\, :\, \mathbb{Z} \;\;\; e_2\, :\, \mathbb{Z}}{e_1\, \leq \,e_2 \, :\, \mathbb{B}}$
+            </div>
+            <div style="padding: 1.5vw; grid-column: 2; grid-row: 3">
+              $\frac{e_1\, :\, \mathbb{B} \;\;\; e_2\, :\, \mathbb{B}}{e_1\, \land \,e_2 \, :\, \mathbb{B}}$
+            </div>
+            <div style="padding: 1.5vw; grid-column: 3; grid-row: 3">
+              $\frac{e_1\, :\, \mathbb{B} \;\;\; e_2\, :\, \mathbb{B}}{e_1\, \lor \,e_2 \, :\, \mathbb{B}}$
+            </div>
+          </div>
         </section>
 
         <section>
-          <h2>D'abord <span class="green">Final</span>…</h2>
+          <h2>Codage <span class="green">Initial</span></h2>
+          <div class="fragment">Syntaxe abstraite $\equiv$ Type Abstrait de Donnée</div>
+          <pre  class="fragment" style="font-size: 1.1ex; margin-top: 1.8em; margin-bottom: 100%"><code class="scala" style="max-height: 800px">
+
+
+                      sealed trait Exp
+
+                      case class Num(i: Int) extends Exp
+                      case class Bool(b: Boolean) extends Exp
+
+                      case class Neg(e: Exp) extends Exp
+                      case class Add(e1: Exp, e2: Exp) extends Exp
+                      case class Mul(e1: Exp, e2: Exp) extends Exp
+
+                      case class Or(e1: Exp, e2: Exp) extends Exp
+                      case class And(e1: Exp, e2: Exp) extends Exp
+                      case class Leq(e1: Exp, e2: Exp) extends Exp
+
+
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Codage <span class="green">Initial</span></h2>
+
+          <div style="margin-top: 1.8em">$ti_1 \,=\, 8 \,-\,(1 \,+\, 2)$</div>
+          <div>$ti_2 \,=\, 7 \,\times\, ti_1$</div>
+          <div>$ti_3 \,=\, (ti_1\,\leq\, ti_2) \,\lor\, (0 \,\leq\, ti_2)$</div>
+
+          <pre class="fragment" style="font-size: 1.1ex; margin-top: 3em; margin-bottom: 100%"><code class="scala" style="max-height: 800px">
+              val ti1: Add = Add(Num(8), Neg(Add(Num(1), (Num(2)))))
+              val ti2: Mul = Mul(Num(7), ti1)
+              val ti3: Or = Or(Leq(ti2, ti1), Leq(Num(0), ti2))
+          </code></pre>
+        </section>
+
+
+
+        <section>
+          <h2>Codage <span class="green">Initial</span></h2>
+          <div class="fragment">Evaluateur de la syntaxe abstraite</div>
+          <pre  class="fragment" style="font-size: 1.1ex; margin-top: 1.8em; margin-bottom: 100%"><code class="scala" style="max-height: 800px">
+
+                  object Exp {
+                    def eval = {
+
+                      case Num(i) => i
+                      case Bool(b) => b
+
+                      case Neg(e) => - eval(e)
+                      case Add(e1, e2) => eval(e1) + eval(e2)
+                      case Mul(e1, e2) => eval(e1) * eval(e2)
+
+                      case Or(e1, e2) => eval(e1).asB || eval(e2)
+                      case And(e1, e2) => eval(e1) && eval(e2)
+                      case Leq(e1, e2) => eval(e1) <= eval(e2)
+                    }
+                  }
+
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Type Universel</h2>
+          <div class="fragment">Type somme $\longrightarrow$ <span class="green">Tag</span></div>
+          <pre  class="fragment" style="font-size: 1.1ex; margin-top: 1.8em; margin-bottom: 100%"><code class="scala" style="max-height: 800px">
+
+              trait U {
+                def asI: Int = this match { case UI(i) => i }
+                def asB: Boolean = this match { case UB(b) => b }
+              }
+
+              case class UB(b: Boolean) extends U
+              case class UI(i: Int) extends U
+
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Codage <span class="green">Tagged Initial</span></h2>
+          <pre  class="fragment" style="font-size: 1.1ex; margin-top: 1.8em; margin-bottom: 100%"><code class="scala" style="max-height: 800px">
+
+              object Exp {
+                def eval: Exp => U = {
+
+                  case Num(i) => UI(i)
+                  case Bool(b) => UB(b)
+
+                  case Neg(e) => UI(-eval(e).asI)
+                  case Add(e1, e2) => UI(eval(e1).asI + eval(e2).asI)
+                  case Mul(e1, e2) => UI(eval(e1).asI * eval(e2).asI)
+
+                  case Or(e1, e2) => UB(eval(e1).asB || eval(e2).asB)
+                  case And(e1, e2) => UB(eval(e1).asB && eval(e2).asB)
+                  case Leq(e1, e2) => UB(eval(e1).asI <= eval(e2).asI)
+                }
+              }
+
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Codage <span class="green">Tagged Initial</span></h2>
+          <div class="fragment">Évaluation d'un terme</div>
+          <pre  class="fragment" style="font-size: 1.1ex; margin-top: 1.8em; margin-bottom: 100%"><code class="scala" style="max-height: 800px">
+
+                      Exp.eval(ExpSamples.ti3).asB == true
+
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Limitations</h2>
+          <ul style="margin-bottom: 0px">
+            <li class="fragment">Filtrage de la syntaxe abstraite</li>
+            <li class="fragment">Type universel pour les résultats</li>
+            <li class="fragment"><span class="orange">Termes mal formés</span></li>
+          </ul>
+          <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em"><code class="scala" style="max-height: 800px">
+                      val tie: Neg = Neg(Bool(false))
+          </code></pre>
+          <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em; margin-bottom: 100%"><code class="scala" style="max-height: 800px">
+               Exp.eval(ExpSamples.tie).asB // throws MatchError
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Codage <span class="green">Final</span></h2>
+          <div class="fragment">Constucteurs de types $\longrightarrow$ <span class="green">Combinateurs</span></div>
+          <pre  class="fragment" style="font-size: 1.1ex; margin-top: 1.8em"><code class="scala" style="max-height: 800px">
+
+                    object Exp {
+                      def num(i: Int): Int = i
+                      def neg(r: Int): Int = - r
+                      def add(r1: Int, r2: Int): Int = r1 + r2
+                    }
+
+          </code></pre>
+
+          <pre  class="fragment" style="font-size: 1.1ex; margin-top: 1.8em; margin-bottom: 100%"><code class="scala" style="max-height: 800px">
+
+                val tf1: Int = add(num(8), neg(add(num(1), num(2))))
+
+          </code></pre>
         </section>
 
         <section>
           <h2>Paramétrisons</h2>
-        </section>
-
-        <section>
-          <h2>Détour : les <span class="green">TypeClasses</span></h2>
+          <ul>
+            <li  class="fragment">Codage Initial $\longrightarrow$ nouvelle fonctiom eval</li>
+            <li  class="fragment">Codage FInal $\longrightarrow$ représentation et evaluation mélés</li>
+            <li  class="fragment">Les <span class="green">Type Classes</span> à la rescousse</li>
+          </ul>
         </section>
 
         <section>
@@ -90,7 +264,190 @@
         </section>
 
         <section>
-          <h2>… et puis <span class="green">Tagless</span></h2>
+          <h2>Codage <span class="green">Final</span> (suite)</h2>
+          <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em"><code class="scala" style="max-height: 800px">
+
+                      trait ExpSym[R] {
+                        def num(i: Int): R
+                        def neg(r: R): R
+                        def add(r1: R, r2: R): R
+                      }
+
+          </code></pre>
+          <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em; margin-bottom: 100%"><code class="scala" style="max-height: 800px">
+
+                  def tf1[R: ExpSym]: R = {
+                    val e = implicitly[ExpSym[R]]
+
+                    e.add(e.num(8), e.neg(e.add(e.num(1), e.num(2))))
+                  }
+
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Codage <span class="green">Final</span></h2>
+          Interpretation dans le domaine des entiers
+          <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em"><code class="scala" style="max-height: 800px">
+
+                object ExpSymInt {
+                  implicit val expSymInt: ExpSym[Int] = new ExpSym[Int] {
+                    def num(i: Int): Int = i
+                    def neg(r: Int): Int = -r
+                    def add(r1: Int, r2: Int): Int = r1 + r2
+                  }
+                }
+
+          </code></pre>
+          <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em; margin-bottom: 100%"><code class="scala" style="max-height: 800px">
+
+                import net.sigusr.it1_5.ExpSymInt.expSymInt
+                ExpSymSamples.tf1 == 5
+
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Codage <span class="green">Final</span></h2>
+          Interpretation dans le domaine des chaînes de caractères
+          <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em"><code class="scala" style="max-height: 800px">
+
+                object ExpSymString {
+                  implicit val expSymString: ExpSym[String] = new ExpSym[String] {
+                    def num(i: Int): String = i.toString
+                    def neg(r: String): String = s"(-$r)"
+                    def add(r1: String, r2: String): String = s"($r1 + $r2)"
+                  }
+                }
+
+          </code></pre>
+          <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em; margin-bottom: 100%"><code class="scala" style="max-height: 800px">
+
+                import net.sigusr.it1_5.ExpSymString.expSymString
+                ExpSymSamples.tf1 must_== "(8 + (-(1 + 2)))"
+
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Codage <span class="green">Final</span></h2>
+          Extension de l'interpretation
+          <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em"><code class="scala" style="max-height: 800px">
+
+                  trait MulSym[R] {
+                    def mul(r1: R, r2: R): R
+                  }
+
+          </code></pre>
+          <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em; margin-bottom: 100%"><code class="scala" style="max-height: 800px">
+
+                  def tf2[R:ExpSym: MulSym]: R = {
+                    val e = implicitly[ExpSym[R]]
+                    val m = implicitly[MulSym[R]]
+                    m.mul(e.num(7), ExpSymSamples.tf1)
+                  }
+
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Codage <span class="green">Final</span></h2>
+          Extension de l'interpretation
+          <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em; margin-bottom: 100%"><code class="scala" style="max-height: 800px">
+
+                  object MulSymInt {
+                    implicit val mulSymInt: MulSym[Int] =
+                              (r1: Int, r2: Int) => r1 * r2
+                  }
+
+                  object MulSymString {
+                    implicit val mulSymString: MulSym[String] =
+                              (r1: String, r2: String) => s"($r1 * $r2)"
+                  }
+
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Codage <span class="green">Final</span></h2>
+          <ul style="margin-bottom: 0">
+            <li class="fragment">Et Rust dans tout ça ?</li>
+          </ul>
+          <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em"><code class="rust" style="max-height: 800px">
+
+                  pub trait ExpSym {
+                      fn num(i: u64) -> Self;
+                      fn neg(r: Self) -> Self;
+                      fn add(r1: Self, r2: Self) -> Self;
+                  }
+
+          </code></pre>
+
+          <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em; margin-bottom: 100%"><code class="rust" style="max-height: 800px">
+
+                  pub fn tf1&lt;T: ExpSym&gt;() -> T {
+                      ExpSym::add(
+                          ExpSym::lit(8),
+                          ExpSym::neg(
+                              ExpSym::add(ExpSym::lit(1), ExpSym::lit(2))))
+                  }
+
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Codage <span class="green">Final</span></h2>
+          <ul style="margin-bottom: 0">
+            <li class="fragment">Et Rust dans tout ça ?</li>
+          </ul>
+          <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em"><code class="rust" style="max-height: 800px">
+
+                  pub trait MulSym {
+                      fn mul(r1: Self, r2: Self) -> Self;
+                  }
+
+          </code></pre>
+          <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em; margin-bottom: 100%"><code class="rust" style="max-height: 800px">
+
+                  pub fn tf2&lt;T: ExpSym + MulSym&gt;() -> T {
+                      MulSym::mul(ExpSym::lit(7), tf1())
+                  }
+
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Codage <span class="green">Final</span></h2>
+          <ul style="margin-bottom: 0">
+            <li class="fragment">Et Rust dans tout ça ?</li>
+          </ul>
+          <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em"><code class="rust" style="max-height: 800px">
+
+                  impl ExpSym for i128 {
+                      fn num(i: u64) -> Self { i as i128 }
+                      fn neg(r: Self) -> Self { -r }
+                      fn add(r1: Self, r2: Self) -> Self { r1 + r2 }
+                  }
+          </code></pre>
+          <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em; margin-bottom: 100%"><code class="rust" style="max-height: 800px">
+
+                  impl MulSym for String {
+                      fn mul(r1: Self, r2: Self) -> Self {
+                          format!( "({} * {})", r1, r2)
+                      }
+                  }
+
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Codage <span class="green">Tagless</span></h2>
+          <ul>
+            <li class="fragment">Ajout des expressions booléennes</li>
+            <li class="fragment">Toujours le problème du typage</li>
+            <li class="fragment">Types d'ordre supérieur</li>
+            <li class="fragment">Haskell, O'Caml, Scala... Mais pas Rust</li>
+          </ul>
         </section>
 
         <section>
@@ -107,15 +464,16 @@
 
         <section>
           <h2>Ressources</h2>
-          <ul style="margin-top: 3em">
+          <ul style="margin-top: 2em">
               <li class="fragment">Finally Tagless, Partially Evaluated<a href="http://okmij.org/ftp/tagless-final/JFP.pdf"> [PDF]</a></li>
               <li class="fragment">Typed Tagless Final Interpreters<a href="http://okmij.org/ftp/tagless-final/course/lecture.pdf"> [PDF]</a></li>
-              <li class="fragment" style="margin-top: 0.4em">How to make ad-hoc polymorphism less ad hoc<a href="https://people.csail.mit.edu/dnj/teaching/6898/papers/wadler88.pdf"> [PDF]</a></li>
+              <li class="fragment" style="margin-top: 0.8em">How to make ad-hoc polymorphism less ad hoc<a href="https://people.csail.mit.edu/dnj/teaching/6898/papers/wadler88.pdf"> [PDF]</a></li>
               <li class="fragment">Implementing Haskell Overloading<a href="https://dl.acm.org/doi/pdf/10.1145/165180.165191"> [PDF]</a></li>
               <li class="fragment">Implementing, and Understanding Type Classes<a href="http://okmij.org/ftp/Computation/typeclass.html"> [BLOG]</a></li>
               <li class="fragment">Type Classes as Objects and Implicits<a href="https://ropas.snu.ac.kr/~bruno/papers/TypeClasses.pdf"> [PDF]</a></li>
-              <li class="fragment" style="margin-top: 0.4em">IO monad: which, why and how<a href="https://kubuszok.com/2019/io-monad-which-why-and-how/#io-monads-in-scala"> [BLOG]</a></li>
-              <li class="fragment" style="margin-top: 0.4em">fs2-mqtt<a href="https://github.com/user-signal/fs2-mqtt"> [CODE]</a></li>
+              <li class="fragment" style="margin-top: 0.8em">IO monad: which, why and how<a href="https://kubuszok.com/2019/io-monad-which-why-and-how/#io-monads-in-scala"> [BLOG]</a></li>
+              <li class="fragment" style="margin-top: 0.8em">fs2-mqtt<a href="https://github.com/user-signal/fs2-mqtt"> [CODE]</a></li>
+              <li class="fragment" >Code de cette présentation<a href="https://github.com/user-signal/tagless-final-lambda-lille/tree/master/code"> [CODE]</a></li>
           </ul>
       </section>
 
@@ -130,7 +488,7 @@
         </section>
 
         <!-- <section>
-          <pre style="font-size: 1.1ex; margin-top: 1.8em; margin-bottom: 100%"><code class="java" style="max-height: 800px;">
+          <pre style="font-size: 1.1ex; margin-top: 1.8em; margin-bottom: 100%"><code class="scala" style="max-height: 800px">
           </code></pre>
         </section> -->
 

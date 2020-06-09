@@ -1,11 +1,11 @@
-package net.sigusr.it0
+package net.sigusr.it0_5
 import org.specs2.specification.core.SpecStructure
 
 class ExpSpec extends org.specs2.Specification {
   override def is: SpecStructure = s2"""
 An Exp expression when interpreted with the 'eval' evaluator
-   add(lit(8), neg(add(lit(1), lit(2)))) must be 5 $e1
-   add(lit(8), neg(add(lit(1), lit(2)))) must be 5 $e2
+   add(lit(8), neg(add(lit(1), num(2)))) must be 5 $e1
+   add(lit(8), neg(add(lit(1), num(2)))) must be 5 $e2
 """
 
   private def e1 = {

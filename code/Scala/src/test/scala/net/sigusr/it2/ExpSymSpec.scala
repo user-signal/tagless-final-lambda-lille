@@ -4,9 +4,9 @@ class ExpSymSpec extends org.specs2.Specification {
 
   def is = s2"""
 An ExpSym expression when interpreted with the 'R' evaluator
-   add(lit(8), neg(add(lit(1), lit(2)))) must be 5 $e1
+   add(lit(8), neg(add(lit(1), num(2)))) must be 5 $e1
 An ExpSym expression when interpreted with the 'S' evaluator
-   add(lit(8), neg(add(lit(1), lit(2)))) must be "(8 + (-(1 + 2)))" $e2
+   add(lit(8), neg(add(lit(1), num(2)))) must be "(8 + (-(1 + 2)))" $e2
 """
 
   private def e1 = {
