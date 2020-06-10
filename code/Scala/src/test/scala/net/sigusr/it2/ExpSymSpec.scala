@@ -11,11 +11,11 @@ An ExpSym expression when interpreted with the 'S' evaluator
 
   private def e1 = {
     import ExpSymInt.expSymInt
-    ExpSymSamples.tf1.unR must_== 5
+    ExpSymSamples.tf1 must_== 5
   }
 
   private def e2 = {
     import ExpSymString.expSymString
-    ExpSymSamples.tf1.unS must_== "(8 + (-(1 + 2)))"
+    ExpSymSamples.tf1 must_== "(8 + (-(1 + 2)))"
   }
 }

@@ -2,7 +2,7 @@ package net.sigusr
 
 package object it2 {
 
-  case class R[A](unR: A) extends AnyVal
+  type I[A] = A
 
-  case class S[A](unS: String) extends AnyVal
+  type S[A] = String
 }

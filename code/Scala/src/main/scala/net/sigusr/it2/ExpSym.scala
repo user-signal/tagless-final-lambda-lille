@@ -15,17 +15,17 @@ object ExpSymSamples {
 }
 
 object ExpSymInt {
-  implicit val expSymInt: ExpSym[R] = new ExpSym[R] {
-    def num(i: Int): R[Int] = R(i)
-    def neg(r: R[Int]): R[Int] = R(-r.unR)
-    def add(r1: R[Int], r2: R[Int]): R[Int] = R(r1.unR + r2.unR)
+  implicit val expSymInt: ExpSym[I] = new ExpSym[I] {
+    def num(i: Int): I[Int] = i
+    def neg(r: I[Int]): I[Int] = -r
+    def add(r1: I[Int], r2: I[Int]): I[Int] = r1 + r2
   }
 }
 
 object ExpSymString {
   implicit val expSymString: ExpSym[S] = new ExpSym[S] {
-    def num(i: Int): S[Int] = S(i.toString)
-    def neg(r: S[Int]): S[Int] = S(s"(-${r.unS})")
-    def add(r1: S[Int], r2: S[Int]): S[Int] = S(s"(${r1.unS} + ${r2.unS})")
+    def num(i: Int): S[Int] = i.toString
+    def neg(r: S[Int]): S[Int] = s"(-${r})"
+    def add(r1: S[Int], r2: S[Int]): S[Int] = s"(${r1} + ${r2})"
   }
 }

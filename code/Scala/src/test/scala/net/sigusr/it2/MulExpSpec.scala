@@ -12,12 +12,12 @@ MulSym expressions when interpreted with the 'String' evaluator
   private def e2 = {
     import ExpSymInt.expSymInt
     import MulSymInt.mulSymInt
-    MulSymSamples.tf2.unR must_== 35
+    MulSymSamples.tf2 must_== 35
   }
 
   private def e4 = {
     import ExpSymString.expSymString
     import MulSymString.mulSymString
-    MulSymSamples.tf2.unS must_== "(7 * (8 + (-(1 + 2))))"
+    MulSymSamples.tf2 must_== "(7 × (8 + (-(1 + 2))))"
   }
 }

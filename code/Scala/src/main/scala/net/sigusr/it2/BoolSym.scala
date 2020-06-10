@@ -12,15 +12,24 @@ object BoolSymSamples {
   def tf3[R[_]:ExpSym: MulSym: BoolSym]: R[Boolean] = {
     val e = implicitly[ExpSym[R]]
     val b = implicitly[BoolSym[R]]
-    b.or(b.leq(MulSymSamples.tf2, ExpSymSamples.tf1), b.leq(e.num(0), MulSymSamples.tf2))
+    b.or(b.leq(ExpSymSamples.tf1, MulSymSamples.tf2), b.leq(e.num(0), MulSymSamples.tf2))
   }
 }
 
-object BoolSymInt {
-  implicit val boolSymInt: BoolSym[R] = new BoolSym[R] {
-    def bool(b: Boolean): R[Boolean] = R(b)
-    def leq(r1: R[Int], r2: R[Int]): R[Boolean] = R(r1.unR <= r2.unR)
-    def or(r1: R[Boolean], r2: R[Boolean]): R[Boolean] = R(r1.unR || r2.unR)
-    def and(r1: R[Boolean], r2: R[Boolean]): R[Boolean] = R(r1.unR && r2.unR)
+object BoolSymI {
+  implicit val boolSymI: BoolSym[I] = new BoolSym[I] {
+    def bool(b: Boolean): I[Boolean] = b
+    def leq(r1: I[Int], r2: I[Int]): I[Boolean] = r1 <= r2
+    def or(r1: I[Boolean], r2: I[Boolean]): I[Boolean] = r1 || r2
+    def and(r1: I[Boolean], r2: I[Boolean]): I[Boolean] = r1 && r2
+  }
+}
+
+object BoolSymS {
+  implicit val boolSymS: BoolSym[S] = new BoolSym[S] {
+    override def bool(b: Boolean): S[Boolean] = b.toString
+    override def leq(r1: S[Int], r2: S[Int]): S[Boolean] = s"(${r1} ≦ ${r2})"
+    override def or(r1: S[Boolean], r2: S[Boolean]): S[Boolean] = s"(${r1} ∨ ${r2})"
+    override def and(r1: S[Boolean], r2: S[Boolean]): S[Boolean] = s"(${r1} ∧ ${r2})"
   }
 }
