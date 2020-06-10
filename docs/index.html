@@ -285,7 +285,7 @@
             <h2>Type classes</h2>
               <div class="fragment">Façon Java</div>
               <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em"><code class="scala" style="max-height: 800px">
-              def sort[T](l: List[T])(ord: Ord[T]): List[T] = ???
+              def sort[T](l: List[T], ord: Ord[T]): List[T] = ???
           </code></pre>
               <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em"><code class="scala" style="max-height: 800px">
               trait Ord[T] {
@@ -297,7 +297,7 @@
                 override def compare(a: Int, b: Int): Boolean = a <= b
               }
 
-              val res: List[Int] = sort(List(26, 1, 1969))(intOrd)
+              val res: List[Int] = sort(List(26, 1, 1969),intOrd)
           </code></pre>
         </section>
 
@@ -307,9 +307,12 @@
               <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em"><code class="scala" style="max-height: 800px">
               def sort[T](l: List[T])(implicit ord: Ord[T]): List[T] = ???
           </code></pre>
-              <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em"><code class="scala" style="max-height: 800px">
+              <div class="fragment">
+                  <ul style="margin-bottom: 0"><li>Identique à</li></ul>
+                  <pre style="font-size: 1.1ex; margin-top: 1.8em"><code class="scala" style="max-height: 800px">
               def sort[T: Ord](l: List[T]): List[T] = ???
           </code></pre>
+              </div>
               <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em; margin-bottom: 100%"><code class="scala" style="max-height: 800px">
               implicit val intOrd: Ord[Int] = new Ord[Int] {
                 override def compare(a: Int, b: Int): Boolean = a <= b
@@ -323,11 +326,11 @@
           <h2>Codage <span class="green">Final</span> (suite)</h2>
           <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em"><code class="scala" style="max-height: 800px">
 
-                      trait ExpSym[R] {
-                        def num(i: Int): R
-                        def neg(r: R): R
-                        def add(r1: R, r2: R): R
-                      }
+                  trait ExpSym[R] {
+                    def num(i: Int): R
+                    def neg(r: R): R
+                    def add(r1: R, r2: R): R
+                  }
 
           </code></pre>
           <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em; margin-bottom: 100%"><code class="scala" style="max-height: 800px">
@@ -368,19 +371,19 @@
           Interpretation dans le domaine des chaînes de caractères
           <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em"><code class="scala" style="max-height: 800px">
 
-                object ExpSymString {
-                  implicit val expSymString: ExpSym[String] = new ExpSym[String] {
-                    def num(i: Int): String = i.toString
-                    def neg(r: String): String = s"(-$r)"
-                    def add(r1: String, r2: String): String = s"($r1 + $r2)"
-                  }
-                }
+            object ExpSymString {
+              implicit val expSymString: ExpSym[String] = new ExpSym[String] {
+                def num(i: Int): String = i.toString
+                def neg(r: String): String = s"(-$r)"
+                def add(r1: String, r2: String): String = s"($r1 + $r2)"
+              }
+            }
 
           </code></pre>
           <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em; margin-bottom: 100%"><code class="scala" style="max-height: 800px">
 
-                import net.sigusr.it1_5.ExpSymString.expSymString
-                ExpSymSamples.tf1 must_== "(8 + (-(1 + 2)))"
+            import net.sigusr.it1_5.ExpSymString.expSymString
+            ExpSymSamples.tf1 must_== "(8 + (-(1 + 2)))"
 
           </code></pre>
         </section>
@@ -499,9 +502,9 @@
         <section>
           <h2>Codage <span class="green">Tagless</span></h2>
           <ul>
-            <li class="fragment">Ajout des expressions booléennes</li>
+            <li class="fragment" style="margin-top: 2ex">Ajout des expressions booléennes</li>
             <li class="fragment">Toujours le problème du typage</li>
-            <li class="fragment">Types d'ordre supérieur</li>
+            <li class="fragment" style="margin-top: 1ex">Types d'ordre supérieur</li>
             <li class="fragment">Haskell, O'Caml, Scala... Mais pas Rust</li>
           </ul>
         </section>
@@ -520,7 +523,7 @@
           </code></pre>
             <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em; margin-bottom: 100%"><code class="scala" style="max-height: 800px">
 
-              def tfb1[R[_]:ExpSym: MulSym: BoolSym]: R[Boolean] = {
+              def tf3[R[_]:ExpSym: MulSym: BoolSym]: R[Boolean] = {
                 val e = implicitly[ExpSym[R]]
                 val b = implicitly[BoolSym[R]]
                 b.or(
@@ -536,19 +539,20 @@
           <h2>Codage <span class="green">Tagless</span></h2>
             <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em"><code class="scala" style="max-height: 800px">
 
-    object BoolSymInt {
-      implicit val boolSymInt: BoolSym[R] = new BoolSym[R] {
-        def bool(b: Boolean): R[Boolean] = R(b)
-        def leq(r1: R[Int], r2: R[Int]): R[Boolean] = R(r1.unR <= r2.unR)
-        def or(r1: R[Boolean], r2: R[Boolean]): R[Boolean] = R(r1.unR || r2.unR)
-        def and(r1: R[Boolean], r2: R[Boolean]): R[Boolean] = R(r1.unR && r2.unR)
-      }
-    }
+                                   type I[A] = A
 
           </code></pre>
+            <div class="fragment"><code>I</code> est de <span class="green">sorte</span> $*\,\rightarrow\,*$</div>
             <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em; margin-bottom: 100%"><code class="scala" style="max-height: 800px">
 
-                        type I[A] = A
+        object BoolSymI {
+          implicit val boolSymI: BoolSym[I] = new BoolSym[I] {
+            def bool(b: Boolean): I[Boolean] = b
+            def leq(r1: I[Int], r2: I[Int]): I[Boolean] = r1 <= r2
+            def or(r1: I[Boolean], r2: I[Boolean]): I[Boolean] = r1 || r2
+            def and(r1: I[Boolean], r2: I[Boolean]): I[Boolean] = r1 && r2
+          }
+        }
 
           </code></pre>
         </section>
@@ -556,9 +560,9 @@
         <section>
           <h2>Codage <span class="green">Tagless</span></h2>
             <ul style="margin-top: 1.8em; margin-bottom: 0">
-                <li>$ti_1 \,=\, 8 \,-\,(1 \,+\, 2)$</li>
-                <li>$ti_2 \,=\, 7 \,\times\, ti_1$</li>
-                <li>$ti_3 \,=\, (ti_1\,\leq\, ti_2) \,\lor\, (0 \,\leq\, ti_2)$</li>
+                <li>$tf_1 \,=\, 8 \,-\,(1 \,+\, 2)$</li>
+                <li>$tf_2 \,=\, 7 \,\times\, ti_1$</li>
+                <li>$tf_3 \,=\, (ti_1\,\leq\, ti_2) \,\lor\, (0 \,\leq\, ti_2)$</li>
             </ul>
 
             <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em; margin-bottom: 100%"><code class="scala" style="max-height: 800px">
@@ -588,6 +592,47 @@
         <section>
           <img src="myAssets/images/Kubuszok.png" alt="IO monad: which, why and how"/>
         </section>
+
+          <section>
+              <h2>Shameless Plug: <span class="green">fs2-mqtt</span></h2>
+              <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em; margin-bottom: 100%"><code class="scala" style="max-height: 800px">
+
+        trait Session[F[_]] {
+          def messages(): Stream[F, Message]
+
+          def subscribe(topics: Vector[(String, QualityOfService)]):
+                  F[Vector[(String, QualityOfService)]]
+
+          def unsubscribe(topics: Vector[String]): F[Unit]
+
+          def publish(
+              topic: String,
+              payload: Vector[Byte],
+              qos: QualityOfService = AtMostOnce,
+              retain: Boolean = false
+          ): F[Unit]
+
+          def state: SignallingRef[F, ConnectionState]
+        }
+
+          </code></pre>
+          </section>
+
+          <section>
+              <h2>Shameless Plug: <span class="green">fs2-mqtt</span></h2>
+              <pre class="fragment" style="font-size: 1.1ex; margin-top: 1.8em; margin-bottom: 100%"><code class="scala" style="max-height: 800px">
+
+        object Session {
+
+          def apply[F[_]: Concurrent: Timer: ContextShift](
+              transportConfig: TransportConfig[F],
+              sessionConfig: SessionConfig
+          ): Resource[F, Session[F]] = ...
+
+        }
+
+          </code></pre>
+          </section>
 
         <section>
           <h2>Ressources</h2>

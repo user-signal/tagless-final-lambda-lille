@@ -6,13 +6,13 @@ object tc {
     def compare(a: T, b: T): Boolean
   }
 
-  def sort[T](l: List[T])(ord: Ord[T]): List[T] = ???
+  def sort[T](l: List[T], ord: Ord[T]): List[T] = ???
 
   val intOrd: Ord[Int] = new Ord[Int] {
     override def compare(a: Int, b: Int): Boolean = a <= b
   }
 
-  val res: List[Int] = sort(List(26, 1, 1969))(intOrd)
+  val res: List[Int] = sort(List(26, 1, 1969), intOrd)
 }
 
 object tci {
