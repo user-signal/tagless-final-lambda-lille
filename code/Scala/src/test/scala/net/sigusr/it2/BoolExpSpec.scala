@@ -11,6 +11,6 @@ BoolSym expressions when interpreted with the 'Int' evaluator
     import ExpSymInt.expSymInt
     import MulSymInt.mulSymInt
     import BoolSymInt.boolSymInt
-    BoolSymSamples.tfb1.unR must_== true
+    BoolSymSamples.tf3.unR must_== true
   }
 }

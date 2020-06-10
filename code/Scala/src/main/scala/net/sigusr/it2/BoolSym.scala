@@ -9,10 +9,10 @@ trait BoolSym[R[_]] {
 
 object BoolSymSamples {
 
-  def tfb1[R[_]:ExpSym: MulSym: BoolSym]: R[Boolean] = {
+  def tf3[R[_]:ExpSym: MulSym: BoolSym]: R[Boolean] = {
     val e = implicitly[ExpSym[R]]
     val b = implicitly[BoolSym[R]]
-    b.or(b.leq(MulSymSamples.tfm2, ExpSymSamples.tf1), b.leq(e.num(0), MulSymSamples.tfm2))
+    b.or(b.leq(MulSymSamples.tf2, ExpSymSamples.tf1), b.leq(e.num(0), MulSymSamples.tf2))
   }
 }
 

@@ -6,13 +6,7 @@ trait MulSym[R[_]] {
 
 object MulSymSamples {
 
-  def tfm1[R[_]:ExpSym: MulSym]: R[Int] = {
-    val e = implicitly[ExpSym[R]]
-    val m = implicitly[MulSym[R]]
-    e.add(e.num(7), e.neg(m.mul(e.num(2), e.num(1))))
-  }
-
-  def tfm2[R[_]:ExpSym: MulSym]: R[Int] = {
+  def tf2[R[_]:ExpSym: MulSym]: R[Int] = {
     val e = implicitly[ExpSym[R]]
     val m = implicitly[MulSym[R]]
     m.mul(e.num(7), ExpSymSamples.tf1)

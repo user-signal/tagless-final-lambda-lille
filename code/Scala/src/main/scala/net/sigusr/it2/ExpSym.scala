@@ -12,10 +12,6 @@ object ExpSymSamples {
     val e = implicitly[ExpSym[R]]
     e.add(e.num(8), e.neg(e.add(e.num(1), e.num(2))))
   }
-
-  def tf3[R[_]](implicit e: ExpSym[R]): R[Int] = {
-    e.add(tf1, e.neg(e.neg(tf1)))
-  }
 }
 
 object ExpSymInt {
