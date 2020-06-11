@@ -150,7 +150,7 @@
                       case Add(e1, e2) => eval(e1) + eval(e2)
                       case Mul(e1, e2) => eval(e1) * eval(e2)
 
-                      case Or(e1, e2) => eval(e1).asB || eval(e2)
+                      case Or(e1, e2) => eval(e1) || eval(e2)
                       case And(e1, e2) => eval(e1) && eval(e2)
                       case Leq(e1, e2) => eval(e1) <= eval(e2)
                     }
@@ -589,11 +589,11 @@
           <h2>Exemple: <span class="green">IO Monads</span></h2>
                 <ul style="margin-top: 3ex">
                     <li class="fragment">Gestion <span class="green">référentiellement transparente</span> des effets</li>
-                    <li class="fragment"><span class="yellow">Embedded Domain Specific Language</span></li>
+                    <li class="fragment" style="margin-top: 1ex"><span class="yellow">Embedded Domain Specific Language</span></li>
                     <li class="fragment">Composé d'un ensemble de « <span class="green">type classes</span> »</li>
-                    <li class="fragment">Type classes de <span class="orange">Cats effect</span> : <span class="fragment"><span class="yellow">Bracket</span>, </span><span class="fragment"><span class="yellow">Sync</span>, </span><span class="fragment"><span class="yellow">Concurrent</span>, ...</span></li>
+                    <li class="fragment" style="margin-top: 1ex">Type classes de <span class="orange">Cats effect</span> : <span class="fragment"><span class="yellow">Bracket</span>, </span><span class="fragment"><span class="yellow">Sync</span>, </span><span class="fragment"><span class="yellow">Concurrent</span>, ...</span></li>
                     <li class="fragment">Instances de <span class="orange">Cats effect</span> : <span class="fragment"><span class="yellow">Cats effect IO</span>, </span><span class="fragment"><span class="yellow">Monix Task</span>, </span><span class="fragment"><span class="yellow">ZIO</span>, ...</span></li>
-                    <li class="fragment">Description d'un programme d'effets</li>
+                    <li class="fragment" style="margin-top: 1ex">Description d'un programme d'effets</li>
                     <li class="fragment">Interprétation « <span class="green">à la fin du monde</span> »</li>
                 </ul>
         </section>

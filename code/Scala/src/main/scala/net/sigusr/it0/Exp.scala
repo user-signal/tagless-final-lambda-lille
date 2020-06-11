@@ -18,7 +18,7 @@ object Exp {
 //    case Add(e1, e2) => eval(e1) + eval(e2)
 //    case Mul(e1, e2) => eval(e1) * eval(e2)
 //    case Bool(b) => b
-//    case Or(e1, e2) => eval(e1).asB || eval(e2)
+//    case Or(e1, e2) => eval(e1) || eval(e2)
 //    case And(e1, e2) => eval(e1) && eval(e2)
 //    case Leq(e1, e2) => eval(e1) <= eval(e2)
 //  }
