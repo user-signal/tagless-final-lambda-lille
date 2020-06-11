@@ -15,7 +15,7 @@ object ExpSymSamples {
 }
 
 object ExpSymInt {
-  implicit val expSymInt: ExpSym[I] = new ExpSym[I] {
+  implicit val expSymI: ExpSym[I] = new ExpSym[I] {
     def num(i: Int): I[Int] = i
     def neg(r: I[Int]): I[Int] = -r
     def add(r1: I[Int], r2: I[Int]): I[Int] = r1 + r2
@@ -23,7 +23,7 @@ object ExpSymInt {
 }
 
 object ExpSymString {
-  implicit val expSymString: ExpSym[S] = new ExpSym[S] {
+  implicit val expSymS: ExpSym[S] = new ExpSym[S] {
     def num(i: Int): S[Int] = i.toString
     def neg(r: S[Int]): S[Int] = s"(-${r})"
     def add(r1: S[Int], r2: S[Int]): S[Int] = s"(${r1} + ${r2})"

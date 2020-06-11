@@ -10,12 +10,12 @@ An ExpSym expression when interpreted with the 'S' evaluator
 """
 
   private def e1 = {
-    import ExpSymInt.expSymInt
+    import ExpSymInt.expSymI
     ExpSymSamples.tf1 must_== 5
   }
 
   private def e2 = {
-    import ExpSymString.expSymString
+    import ExpSymString.expSymS
     ExpSymSamples.tf1 must_== "(8 + (-(1 + 2)))"
   }
 }

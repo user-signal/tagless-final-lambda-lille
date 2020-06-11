@@ -14,10 +14,10 @@ object MulSymSamples {
 }
 
 object MulSymInt {
-  implicit val mulSymInt: MulSym[I] = (r1: I[Int], r2: I[Int]) => r1 * r2
+  implicit val mulSymI: MulSym[I] = (r1: I[Int], r2: I[Int]) => r1 * r2
 }
 
 object MulSymString {
-  implicit val mulSymString: MulSym[S] = (r1: S[Int], r2: S[Int]) => s"(${r1} × ${r2})"
+  implicit val mulSymS: MulSym[S] = (r1: S[Int], r2: S[Int]) => s"(${r1} × ${r2})"
 }
 

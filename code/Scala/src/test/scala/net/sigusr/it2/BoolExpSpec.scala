@@ -9,15 +9,15 @@ BoolSym expressions when interpreted with the 'Int' evaluator
 """
 
   private def e1 = {
-    import ExpSymInt.expSymInt
-    import MulSymInt.mulSymInt
+    import ExpSymInt.expSymI
+    import MulSymInt.mulSymI
     import BoolSymI.boolSymI
     BoolSymSamples.tf3 must_== true
   }
 
   private def e2 = {
-    import ExpSymString.expSymString
-    import MulSymString.mulSymString
+    import ExpSymString.expSymS
+    import MulSymString.mulSymS
     import BoolSymS.boolSymS
     BoolSymSamples.tf3 must_== "(((8 + (-(1 + 2))) ≦ (7 × (8 + (-(1 + 2))))) ∨ (0 ≦ (7 × (8 + (-(1 + 2))))))"
   }
